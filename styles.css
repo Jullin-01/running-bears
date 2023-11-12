@@ -38,10 +38,8 @@ container {
     text-shadow: 5px 5px 1px #015AAA;
 }
 
-@media (min-width: 1000px) {
-    #mainMenu > h1 {
-        font-size: 150px;
-    }
+#mainMenu > h1.large {
+    font-size: 150px;
 }
 
 #mainMenu > input {

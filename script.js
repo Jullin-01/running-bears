@@ -21,6 +21,23 @@ function toggleFullScreen() {
     }
 }
 
+// Сhanging the font size of the game title on fullscreen
+const container = document.querySelector('container');
+const gameTitle = document.querySelector('h1');
+// Checking the width of the container when loading the page
+checkContainerWidth();
+// Checking the width of the container when resizing the window
+window.addEventListener('resize', checkContainerWidth);
+// Function to check container width and apply styles
+function checkContainerWidth() {
+    if (container.offsetWidth > 1000) {
+        gameTitle.classList.add('large');
+    } else {
+        gameTitle.classList.remove('large');
+    }
+}
+
+
 function startGame() {
     switchScreen('gameplayScreen');
     score = 0;
