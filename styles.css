@@ -1,0 +1,170 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    max-width: calc(16 / 9 * 100vh);
+}
+
+container {
+    background-image: linear-gradient(#bc7df8, #848da3);
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 896px;
+    height: 512px;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.screen {
+    display: none;
+}
+
+/* Styles main menu */
+
+#mainMenu > h1 {
+    position: absolute;
+    font-family: 'Shojumaru';
+    font-size: 80px;
+    color: #C8F8FE;
+    -webkit-text-stroke: 3px #015AAA;
+    transform: rotate(-15deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    top: 10%;
+    left: 5%;
+    text-shadow: 5px 5px 1px #015AAA;
+}
+
+@media (min-width: 1000px) {
+    #mainMenu > h1 {
+        font-size: 150px;
+    }
+}
+
+#mainMenu > input {
+    position: absolute;
+    width: 448px;
+    height: 55px;
+    border-radius: 15px;
+    border: 2px solid #015AAA;
+    background-color: #178496;
+    opacity: 0.7;
+    font-family: 'Roboto';
+    font-size: 40px;
+    color: #000000b4;
+    padding-left: 15px;
+    top: 65%;
+    left: calc(50% - 224px);
+}
+
+#playerName::placeholder {
+    font-family: 'Roboto';
+    color: #000000;
+    font-size: 40px;
+    opacity: 0.7;
+}
+
+.startGame {
+    position: absolute;
+    width: 180px;
+    height: 55px;
+    border-radius: 15px;
+    border: 2px solid #015AAA;
+    background-color: #C8F8FE;
+    top: 80%;
+    left: calc(50% - 90px);
+    font-family: 'Shojumaru';
+    font-size: 40px;
+    color: #122B66;
+}
+
+svg {
+    rotate: 10deg;
+    position: absolute;
+    display: block;
+    width: 15%;
+    height: 15%;
+}
+
+.paw1 {
+    top: 90%;
+    left: 20%;
+    opacity: 0;
+    animation: fadeInOut 8s ease-out 0.4s infinite;
+}
+
+.paw2 {
+    top: 80%;
+    left: 45%;
+    opacity: 0;
+    animation: fadeInOut 8s ease-out 0.8s infinite;
+}
+
+.paw3 {
+    top: 65%;
+    left: 35%;
+    opacity: 0;
+    animation: fadeInOut 8s ease-out 1.2s infinite;
+}
+
+.paw4 {
+    top: 55%;
+    left: 65%;
+    opacity: 0;
+    animation: fadeInOut 8s ease-out 1.6s infinite;
+}
+
+.paw5 {
+    top: 35%;
+    left: 55%;
+    opacity: 0;
+    animation: fadeInOut 8s ease-out 2.0s infinite;
+}
+
+.paw6 {
+    top: 30%;
+    left: 80%;
+    opacity: 0;
+    animation: fadeInOut 8s ease-out 2.4s infinite;
+}
+
+.paw7 {
+    top: 10%;
+    left: 70%;
+    opacity: 0;
+    animation: fadeInOut 8s ease-out 2.8s infinite;
+}
+
+.paw8 {
+    top: 0%;
+    left: 90%;
+    opacity: 0;
+    animation: fadeInOut 8s ease-out 3.2s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0; 
+    }
+    50% {
+        opacity: 1; 
+    }
+}
+
+
+
+
+#gameplayScreen {
+    background-color: #d9f9d9;
+    text-align: center;
+    padding: 50px;
+}
+
+#gameOverScreen {
+    background-color: #f9d9d9;
+    text-align: center;
+    padding: 50px;
+}
