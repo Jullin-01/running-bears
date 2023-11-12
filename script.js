@@ -7,6 +7,8 @@ document.getElementById(currentScreen).style.display = 'block';
 
 const fullscreenButton = document.getElementById('fullscreen-button');
 const gameContainer = document.getElementById('game-container');
+const gameTitle = document.querySelector('h1');
+
 
 fullscreenButton.addEventListener('click', toggleFullScreen);
 
@@ -16,26 +18,13 @@ function toggleFullScreen() {
             .catch(err => {
                 alert(`Error when switching to full screen mode: ${err.message}`);
             });
-    } else {
-        document.exitFullscreen();
-    }
-}
-
-// Сhanging the font size of the game title on fullscreen
-const container = document.querySelector('container');
-const gameTitle = document.querySelector('h1');
-// Checking the width of the container when loading the page
-checkContainerWidth();
-// Checking the width of the container when resizing the window
-window.addEventListener('resize', checkContainerWidth);
-// Function to check container width and apply styles
-function checkContainerWidth() {
-    if (container.offsetWidth > 1000) {
         gameTitle.classList.add('large');
     } else {
+        document.exitFullscreen();
         gameTitle.classList.remove('large');
     }
 }
+
 
 
 function startGame() {
