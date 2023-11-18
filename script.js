@@ -25,6 +25,22 @@ function toggleFullScreen() {
     }
 }
 
+// Full screen status change handler
+document.addEventListener('fullscreenchange', function () {
+    if (!document.fullscreenElement) {
+        gameTitle.classList.remove('large');
+    }
+});
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+            gameTitle.classList.remove('large');
+        }
+    }
+});
+
 
 
 function startGame() {
