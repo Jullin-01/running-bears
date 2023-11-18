@@ -88,59 +88,59 @@ svg {
 }
 
 .paw1 {
-    top: 90%;
-    left: 20%;
+    top: 80%;
+    left: 5%;
     opacity: 0;
-    animation: fadeInOut 8s ease-out 0.4s infinite;
+    animation: fadeInOut 5s ease-out 0.3s infinite;
 }
 
 .paw2 {
     top: 80%;
-    left: 45%;
+    left: 30%;
     opacity: 0;
-    animation: fadeInOut 8s ease-out 0.8s infinite;
+    animation: fadeInOut 5s ease-out 0.6s infinite;
 }
 
 .paw3 {
-    top: 65%;
-    left: 35%;
+    top: 55%;
+    left: 25%;
     opacity: 0;
-    animation: fadeInOut 8s ease-out 1.2s infinite;
+    animation: fadeInOut 5s ease-out 0.9s infinite;
 }
 
 .paw4 {
     top: 55%;
-    left: 65%;
+    left: 50%;
     opacity: 0;
-    animation: fadeInOut 8s ease-out 1.6s infinite;
+    animation: fadeInOut 5s ease-out 1.2s infinite;
 }
 
 .paw5 {
-    top: 35%;
-    left: 55%;
+    top: 30%;
+    left: 45%;
     opacity: 0;
-    animation: fadeInOut 8s ease-out 2.0s infinite;
+    animation: fadeInOut 5s ease-out 1.5s infinite;
 }
 
 .paw6 {
     top: 30%;
-    left: 80%;
+    left: 70%;
     opacity: 0;
-    animation: fadeInOut 8s ease-out 2.4s infinite;
+    animation: fadeInOut 5s ease-out 1.8s infinite;
 }
 
 .paw7 {
-    top: 10%;
-    left: 70%;
+    top: 5%;
+    left: 65%;
     opacity: 0;
-    animation: fadeInOut 8s ease-out 2.8s infinite;
+    animation: fadeInOut 5s ease-out 2.1s infinite;
 }
 
 .paw8 {
-    top: 0%;
-    left: 90%;
+    top: 5%;
+    left: 88%;
     opacity: 0;
-    animation: fadeInOut 8s ease-out 3.2s infinite;
+    animation: fadeInOut 5s ease-out 2.4s infinite;
 }
 
 @keyframes fadeInOut {
