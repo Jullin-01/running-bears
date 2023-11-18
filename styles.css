@@ -39,7 +39,7 @@ container {
 }
 
 #mainMenu > h1.large {
-    font-size: 150px;
+    font-size: 8rem;
 }
 
 #mainMenu > input {
