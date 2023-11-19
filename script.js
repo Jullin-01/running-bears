@@ -1,6 +1,5 @@
 let playerName = document.getElementById("playerName").value;
-let currentScreen = 'mainMenu';
-let score = 0;
+let currentScreen = 'registration';
 
 // Display main menu initially
 document.getElementById(currentScreen).style.display = 'block';
@@ -42,25 +41,20 @@ document.addEventListener('keydown', function (event) {
 });
 
 
+function choiceColor() {
+    switchScreen('choiceColorScreen');
+}
+
+function registration() {
+    switchScreen('mainMenuScreen');
+}
+
+function mainMenu() {
+    switchScreen('mainMenuScreen');
+}
 
 function startGame() {
     switchScreen('gameplayScreen');
-    score = 0;
-    document.getElementById('score').textContent = score;
-}
-
-function incrementScore() {
-    score++;
-    document.getElementById('score').textContent = score;
-}
-
-function endGame() {
-    switchScreen('gameOverScreen');
-    document.getElementById('finalScore').textContent = score;
-}
-
-function restartGame() {
-    switchScreen('mainMenu');
 }
 
 function switchScreen(screenId) {
