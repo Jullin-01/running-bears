@@ -45,7 +45,7 @@ function choiceColor() {
     switchScreen('choiceColorScreen');
 }
 
-function registration() {
+function start() {
     switchScreen('mainMenuScreen');
 }
 
