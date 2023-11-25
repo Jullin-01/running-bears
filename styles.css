@@ -154,10 +154,11 @@ container {
 
 
 
-/* Styles main menu */
+/* Styles button */
 
 #mainMenuScreen > button, 
 #choiceColorScreen > button {
+    cursor: pointer;
     position: absolute;
     width: 180px;
     height: 55px;
@@ -182,4 +183,72 @@ container {
 #mainMenuScreen > button.startGame {
     right: 25%;
     top: 50%;
+}
+
+#choiceColorScreen > button.text {
+    cursor: default;
+    width: 50%;
+    left: 45%;
+    top: 20%;
+}
+
+
+/* Styles color */
+
+div.colorArea {
+    position: absolute;
+    width: 40%;
+    height: 60%;
+    left: 50%;
+    top: 35%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+div.colorBlock {
+    cursor: pointer;
+    width: 30%;
+    height: 30%;
+}
+
+div.active {
+    outline: 4px solid #C8F8FE;
+}
+
+.color1 {
+    background: #bab8b8;
+}
+
+.color2 {
+    background: #FFFFFF;
+}
+
+.color3 {
+    background: #965202;
+}
+
+.color4 {
+    background: #0732C8;
+}
+
+.color5 {
+    background: #8205BD;
+}
+
+.color6 {
+    background: #383838;
+}
+
+.color7 {
+    background: #00C2FF;
+}
+
+.color8 {
+    background: #FE0404;
+}
+
+.color9 {
+    background: #03FF2B;
 }
