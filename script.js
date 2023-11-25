@@ -65,18 +65,28 @@ function switchScreen(screenId) {
 
 
 // Active color
-let colorBlocks = document.querySelectorAll('.colorBlock');
-  
-colorBlocks.forEach(function(block) {
-    block.addEventListener('click', function() {
-        toggleActiveClass(block);
-     });
-});
-  
-function toggleActiveClass(clickedBlock) {
+
+document.addEventListener('DOMContentLoaded', function() {
+    let colorBlocks = document.querySelectorAll('.colorBlock');
+    let dynamicBlock = document.getElementById('dynamicBlock');
+
     colorBlocks.forEach(function(block) {
-        block.classList.remove('active');
+        block.addEventListener('click', function() {
+            toggleActiveClass(block);
+            changeDynamicBlockColor(block);
+        });
     });
-  
-    clickedBlock.classList.add('active');
-};
+
+    function toggleActiveClass(clickedBlock) {
+        colorBlocks.forEach(function(block) {
+            block.classList.remove('active');
+        });
+
+        clickedBlock.classList.add('active');
+    }
+
+    function changeDynamicBlockColor(clickedBlock) {
+        let activeColor = getComputedStyle(clickedBlock).backgroundColor;
+        dynamicBlock.style.backgroundColor = activeColor;
+    }
+});

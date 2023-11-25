@@ -218,37 +218,46 @@ div.colorBlock {
 }
 
 .color1 {
-    background: #bab8b8;
+    background-color: #bab8b8;
 }
 
 .color2 {
-    background: #FFFFFF;
+    background-color: #FFFFFF;
 }
 
 .color3 {
-    background: #965202;
+    background-color: #965202;
 }
 
 .color4 {
-    background: #0732C8;
+    background-color: #0732C8;
 }
 
 .color5 {
-    background: #8205BD;
+    background-color: #8205BD;
 }
 
 .color6 {
-    background: #383838;
+    background-color: #383838;
 }
 
 .color7 {
-    background: #00C2FF;
+    background-color: #00C2FF;
 }
 
 .color8 {
-    background: #FE0404;
+    background-color: #FE0404;
 }
 
 .color9 {
-    background: #03FF2B;
+    background-color: #03FF2B;
+}
+
+#dynamicBlock {
+    position: absolute;
+    width: 30%;
+    height: 75%;
+    left: 5%;
+    top: 20%;
+    background: #bab8b8;
 }
