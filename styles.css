@@ -213,7 +213,7 @@ div.colorBlock {
     height: 30%;
 }
 
-div.active {
+.active {
     outline: 4px solid #C8F8FE;
 }
 

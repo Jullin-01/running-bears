@@ -62,3 +62,21 @@ function switchScreen(screenId) {
     document.getElementById(screenId).style.display = 'block';
     currentScreen = screenId;
 }
+
+
+// Active color
+let colorBlocks = document.querySelectorAll('.colorBlock');
+  
+colorBlocks.forEach(function(block) {
+    block.addEventListener('click', function() {
+        toggleActiveClass(block);
+     });
+});
+  
+function toggleActiveClass(clickedBlock) {
+    colorBlocks.forEach(function(block) {
+        block.classList.remove('active');
+    });
+  
+    clickedBlock.classList.add('active');
+};
