@@ -253,11 +253,10 @@ div.colorBlock {
     background-color: #03FF2B;
 }
 
-#dynamicBlock {
+#choiceColorScreen > canvas {
     position: absolute;
-    width: 30%;
+    width: 40%;
     height: 75%;
-    left: 5%;
+    left: 1%;
     top: 20%;
-    background: #bab8b8;
 }

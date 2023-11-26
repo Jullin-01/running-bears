@@ -90,3 +90,23 @@ document.addEventListener('DOMContentLoaded', function() {
         dynamicBlock.style.backgroundColor = activeColor;
     }
 });
+
+
+
+// Scene
+const scene = new THREE.Scene();
+
+// Object
+
+
+// Camera
+const camera = new THREE.PerspectiveCamera();
+camera.position.set(0, 2, 5);
+
+scene.add(camera);
+
+const canvas = document.querySelector('.canvasColor');
+
+const renderer = new THREE.WebGLRenderer({ canvas });
+
+renderer.render(scene, camera)
