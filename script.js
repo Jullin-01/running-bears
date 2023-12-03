@@ -49,9 +49,8 @@ function choiceColor() {
     switchScreen('choiceColorScreen');
 }
 
-/* const start = document.getElementsByClassName('.start')
+const start = document.getElementsByClassName('.start')
 start.addEventListener('click', start())
-*/
 function start() {
     switchScreen('mainMenuScreen');
 }
@@ -72,7 +71,6 @@ function switchScreen(screenId) {
 
 
 // Active color
-
 document.addEventListener('DOMContentLoaded', function() {
     let colorBlocks = document.querySelectorAll('.colorBlock');
     let dynamicBlock = document.getElementById('dynamicBlock');
