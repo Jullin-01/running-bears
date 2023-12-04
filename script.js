@@ -44,21 +44,26 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
-
+const buttonChoiceColor = document.getElementById('choice-color');
+buttonChoiceColor.addEventListener('click', choiceColor)
 function choiceColor() {
     switchScreen('choiceColorScreen');
 }
 
-const start = document.getElementsByClassName('.start')
-start.addEventListener('click', start())
+const buttonStart = document.getElementById('button-start');
+buttonStart.addEventListener('click', start)
 function start() {
     switchScreen('mainMenuScreen');
 }
 
+const buttonMainMenu = document.getElementById('main-menu');
+buttonMainMenu.addEventListener('click', mainMenu)
 function mainMenu() {
     switchScreen('mainMenuScreen');
 }
 
+const buttonStartGame = document.getElementById('start-game');
+buttonStartGame.addEventListener('click', startGame)
 function startGame() {
     switchScreen('gameplayScreen');
 }
