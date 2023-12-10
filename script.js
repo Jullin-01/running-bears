@@ -74,7 +74,8 @@ function switchScreen(screenId) {
     currentScreen = screenId;
     if (screenId == 'choiceColorScreen') 
     {   
-        resizeRender(renderer); 
+        resizeRender(); 
+        bearModel.getObjectByName('handL').material.color.setStyle(colorBear);
     } 
 }
 
@@ -82,7 +83,6 @@ function switchScreen(screenId) {
 // Active color
 document.addEventListener('DOMContentLoaded', function() {
     let colorBlocks = document.querySelectorAll('.colorBlock');
-    let dynamicBlock = document.getElementById('dynamicBlock');
 
     colorBlocks.forEach(function(block) {
         block.addEventListener('click', function() {
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function changeDynamicBlockColor(clickedBlock) {
         let activeColor = getComputedStyle(clickedBlock).backgroundColor;
-        dynamicBlock.style.backgroundColor = activeColor;
+        bearModel.getObjectByName('handL').material.color.setStyle(activeColor);
     }
 });
 
@@ -113,11 +113,17 @@ const scene = new THREE.Scene();
 // Object
 const loader = new GLTFLoader();
 
+let bearModel = null;
+// get default bear color 
+const color1Element = document.querySelector('.color1');
+const color1BackgroundColor = window.getComputedStyle(color1Element).getPropertyValue('background-color');
+const colorBear = color1BackgroundColor;
+
     loader.load(
         'bear.glb',
         (glb) => {
             console.log('success');
-            console.log(glb);
+            bearModel = glb.scene;
             scene.add(glb.scene);
         },
     );
@@ -138,14 +144,23 @@ scene.add(camera);
     renderer.setClearColor(0xA3A3A3, 0);
 
     window.addEventListener('resize', (e) => { 
-        resizeRender(renderer); 
+        resizeRender();
         }); 
         
-    function resizeRender(block) { 
-    const divCanvasBear = document.getElementById("divCanvasBear"); 
-    block.setSize(divCanvasBear.clientWidth, divCanvasBear.clientHeight); 
-    console.log(canvas); 
-    }
+    function resizeRender() { 
+    const divCanvasBear = document.getElementById("divCanvasBear");
+    // update camera
+    camera.aspect = divCanvasBear.clientWidth / divCanvasBear.clientHeight;
+    camera.updateProjectionMatrix();
+
+    // update canvas size
+    canvas.width = divCanvasBear.clientWidth;
+    canvas.height = divCanvasBear.clientHeight;
+
+    // update renderer
+    renderer.setSize(divCanvasBear.clientWidth, divCanvasBear.clientHeight); 
+    renderer.setPixelRatio = divCanvasBear.clientWidth / divCanvasBear.clientHeight;
+}
 
     const controls = new OrbitControls( camera, renderer.domElement );
 
