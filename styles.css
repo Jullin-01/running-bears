@@ -7,7 +7,6 @@
 
 container {
     background-image: linear-gradient(#bc7df8, #848da3);
-    background-repeat: no-repeat;
     position: absolute;
     width: 896px;
     height: 512px;
@@ -253,10 +252,10 @@ div.colorBlock {
     background-color: #03FF2B;
 }
 
-#choiceColorScreen > canvas {
-    position: absolute;
-    width: 40%;
-    height: 75%;
-    left: 1%;
-    top: 20%;
+div.BearPreviewArea { 
+    position: absolute; 
+    width: 40%; 
+    height: 60%;
+    left: 5%; 
+    top: 35%; 
 }

@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
 let playerName = document.getElementById("playerName").value;
@@ -72,6 +72,10 @@ function switchScreen(screenId) {
     document.getElementById(currentScreen).style.display = 'none';
     document.getElementById(screenId).style.display = 'block';
     currentScreen = screenId;
+    if (screenId == 'choiceColorScreen') 
+    {   
+        resizeRender(renderer); 
+    } 
 }
 
 
@@ -125,14 +129,25 @@ const camera = new THREE.PerspectiveCamera(
     0.1,
     1000
 )
+scene.add(camera);
 
-const canvas = document.querySelector('.canvasColor');
 
-    const renderer = new THREE.WebGLRenderer({ canvas });
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    renderer.setClearColor(0xA3A3A3);
+    const canvas = document.getElementById("canvasColor");
 
-    const controls = new OrbitControls(camera, renderer.domElement)
+    const renderer = new THREE.WebGLRenderer({canvas});
+    renderer.setClearColor(0xA3A3A3, 0);
+
+    window.addEventListener('resize', (e) => { 
+        resizeRender(renderer); 
+        }); 
+        
+    function resizeRender(block) { 
+    const divCanvasBear = document.getElementById("divCanvasBear"); 
+    block.setSize(divCanvasBear.clientWidth, divCanvasBear.clientHeight); 
+    console.log(canvas); 
+    }
+
+    const controls = new OrbitControls( camera, renderer.domElement );
 
     const ambientLight = new THREE.AmbientLight(0xEDEDED, 0.8);
     scene.add(ambientLight);
@@ -141,10 +156,14 @@ const canvas = document.querySelector('.canvasColor');
     scene.add(directionalLight);
     directionalLight.position.set(10, 11, 7);
 
-    camera.position.z = 2
+    camera.position.z = 1
 
     function animate() {
         requestAnimationFrame(animate)
         renderer.render(scene, camera)
     }
     animate()
+
+    
+
+  
