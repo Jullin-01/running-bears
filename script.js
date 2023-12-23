@@ -75,7 +75,13 @@ function switchScreen(screenId) {
     if (screenId == 'choiceColorScreen') 
     {   
         resizeRender(); 
-        bearModel.getObjectByName('handL').material.color.setStyle(colorBear);
+
+        bearModel.traverse(function (object) {
+            if (object.material && object.material.name == 'Mat.base') {
+                object.material.color.setStyle(colorBear);
+            }
+        })
+        
     } 
 }
 
@@ -101,7 +107,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function changeDynamicBlockColor(clickedBlock) {
         let activeColor = getComputedStyle(clickedBlock).backgroundColor;
-        bearModel.getObjectByName('handL').material.color.setStyle(activeColor);
+        bearModel.traverse(function (object) {
+            if (object.material && object.material.name == 'Mat.base') {
+                object.material.color.setStyle(activeColor);
+            }
+        })
     }
 });
 
