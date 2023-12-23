@@ -114,6 +114,8 @@ const scene = new THREE.Scene();
 const loader = new GLTFLoader();
 
 let bearModel = null;
+
+let mixer = null;
 // get default bear color 
 const color1Element = document.querySelector('.color1');
 const color1BackgroundColor = window.getComputedStyle(color1Element).getPropertyValue('background-color');
@@ -122,9 +124,11 @@ const colorBear = color1BackgroundColor;
     loader.load(
         'bear.glb',
         (glb) => {
-            console.log('success');
             bearModel = glb.scene;
             scene.add(glb.scene);
+            mixer = new THREE.AnimationMixer(glb.scene);
+            mixer.clipAction(THREE.AnimationClip.findByName(glb.animations, 'happy-idle')).play();
+
         },
     );
 
@@ -173,7 +177,14 @@ scene.add(camera);
 
     camera.position.z = 1
 
+    const clock = new THREE.Clock();
+
     function animate() {
+
+        if (mixer) {
+            mixer.update(clock.getDelta());
+        }
+
         requestAnimationFrame(animate)
         renderer.render(scene, camera)
     }
