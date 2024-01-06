@@ -1,6 +1,7 @@
-import * as THREE from 'three'
+import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import './styles.css';
 
 let playerName = document.getElementById("playerName").value;
 let currentScreen = 'registration';
