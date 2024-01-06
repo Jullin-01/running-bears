@@ -133,7 +133,7 @@ const color1BackgroundColor = window.getComputedStyle(color1Element).getProperty
 const colorBear = color1BackgroundColor;
 
     loader.load(
-        'bear.glb',
+        './static/bear.glb',
         (glb) => {
             bearModel = glb.scene;
             scene.add(glb.scene);
