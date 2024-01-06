@@ -1,6 +1,7 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimixerPlugin = require('css-minimizer-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const path = require('path');
 
@@ -35,6 +36,9 @@ module.exports = {
             cleanAfterEveryBuildPatterns: ['*.LICENSE.txt'],
         })
     ],
+    optimization: {
+        minimizer: ['...', new CssMinimixerPlugin()],
+    },
     module:
     {
         rules:
