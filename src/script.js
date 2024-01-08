@@ -3,71 +3,22 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import './styles.css';
 
-let playerName = document.getElementById("playerName").value;
-let currentScreen = 'registration';
 
-// Display main menu initially
-document.getElementById(currentScreen).style.display = 'block';
+import {Launcher} from './launcher.js'
 
-const fullscreenButton = document.getElementById('fullscreen-button');
-const gameContainer = document.getElementById('game-container');
-const gameTitle = document.querySelector('h1');
+let _APP = null;
 
-
-fullscreenButton.addEventListener('click', toggleFullScreen);
-
-function toggleFullScreen() {
-    if (!document.fullscreenElement) {
-        gameContainer.requestFullscreen()
-            .catch(err => {
-                alert(`Error when switching to full screen mode: ${err.message}`);
-            });
-        gameTitle.classList.add('large');
-    } else {
-        document.exitFullscreen();
-        gameTitle.classList.remove('large');
-    }
-}
-
-// Full screen status change handler
-document.addEventListener('fullscreenchange', function () {
-    if (!document.fullscreenElement) {
-        gameTitle.classList.remove('large');
-    }
+window.addEventListener('DOMContentLoaded', () => {
+    _APP = new Launcher();
 });
 
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-            gameTitle.classList.remove('large');
-        }
-    }
-});
 
-const buttonChoiceColor = document.getElementById('choice-color');
-buttonChoiceColor.addEventListener('click', choiceColor)
-function choiceColor() {
-    switchScreen('choiceColorScreen');
-}
 
-const buttonStart = document.getElementById('button-start');
-buttonStart.addEventListener('click', start)
-function start() {
-    switchScreen('mainMenuScreen');
-}
 
-const buttonMainMenu = document.getElementById('main-menu');
-buttonMainMenu.addEventListener('click', mainMenu)
-function mainMenu() {
-    switchScreen('mainMenuScreen');
-}
 
-const buttonStartGame = document.getElementById('start-game');
-buttonStartGame.addEventListener('click', startGame)
-function startGame() {
-    switchScreen('gameplayScreen');
-}
+
+
+
 
 function switchScreen(screenId) {
     document.getElementById(currentScreen).style.display = 'none';
