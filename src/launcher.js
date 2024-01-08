@@ -1,6 +1,19 @@
 import {FiniteStateMachine, State} from './finiteStateMachine.js';
+import {Viewport} from './viewport.js';
+import {PlayerPreviewScene} from './playerPreviewScene.js';
 
 let playerName = 'Bear';
+let viewport = null;
+let playerPreviewScene = null;
+
+const color1Element = document.querySelector('.color1');
+const colorBear = window.getComputedStyle(color1Element).getPropertyValue('background-color');
+
+function rendererResize() {
+    const divCanvasBear = document.getElementById("divCanvasBear");
+    viewport.Resize(divCanvasBear.clientWidth, divCanvasBear.clientHeight);
+    playerPreviewScene.UpdateCamera(divCanvasBear.clientWidth / divCanvasBear.clientHeight);
+}
 
 export class Launcher {
     constructor() {
@@ -26,6 +39,32 @@ export class Launcher {
         const buttonPlay = document.getElementById('start-game');
         buttonPlay.addEventListener('click', (event) => {this._FSM.SetState('gameWin');});
 
+        // Color Blocks Listener
+        const colorBlocks = document.querySelectorAll('.colorBlock');
+        colorBlocks.forEach(function(block) {
+            block.addEventListener('click', function() {
+                toggleActiveClass(block);
+                changeDynamicBlockColor(block);
+            });
+        });
+
+        function toggleActiveClass(clickedBlock) {
+            colorBlocks.forEach(function(block) {
+                block.classList.remove('active');
+            });
+    
+            clickedBlock.classList.add('active');
+        }
+    
+        function changeDynamicBlockColor(clickedBlock) {
+            let activeColor = getComputedStyle(clickedBlock).backgroundColor;
+            bearModel.traverse(function (object) {
+                if (object.material && object.material.name == 'Mat.base') {
+                    object.material.color.setStyle(activeColor);
+                }
+            })
+        }
+
         // Fullscreen init
         const buttonFullscreen = document.getElementById('fullscreen-button');
         const gameContainer = document.getElementById('game-container');
@@ -49,6 +88,18 @@ export class Launcher {
             }
         });
 
+        const canvas = document.getElementById("canvasColor");
+        viewport = new Viewport(canvas);
+        console.log(viewport);
+        console.log(viewport.GetRenderer);
+
+        playerPreviewScene = new PlayerPreviewScene(viewport.GetRenderer());
+
+        window.addEventListener('resize', (e) => { 
+            rendererResize();
+        });
+
+        playerPreviewScene.Animate();
     }
 
     GetPlayerName() {
@@ -101,8 +152,8 @@ class MainWinState extends State {
     Enter() {
         console.log('MainWinState Enter()')
         document.getElementById('mainMenuScreen').style.display = 'block';
-        // TODO настроить канвас под текущее окно (mainWin)
-        // TODO установить выбранный (начальный) цвет
+        rendererResize();
+        playerPreviewScene.UpdateBearColor(colorBear);
     }
 
     Exit() {
@@ -123,8 +174,8 @@ class WardrobeWinState extends State {
     Enter() {
         console.log('WardrobeWinState Enter()')
         document.getElementById('choiceColorScreen').style.display = 'block';
-        // TODO настроить канвас под текущее окно (wardrobeWin)
-        // TODO установить выбранный цвет
+        rendererResize();
+        playerPreviewScene.UpdateBearColor(colorBear);
     }
 
     Exit() {
@@ -145,7 +196,7 @@ class GameWinState extends State {
     Enter() {
         console.log('GameWinState Enter()')
         document.getElementById('gameplayScreen').style.display = 'block';
-        // TODO настроить канвас под текущее окно (gameWin)
+        rendererResize();
         // TODO запуск игры
     }
 
