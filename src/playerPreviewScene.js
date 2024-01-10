@@ -5,16 +5,20 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 export class PlayerPreviewScene {
     constructor(renderer) {
         console.log('PlayerPreviewScene constructor');
-        this._Init();
         this._renderer = renderer;
+        this._Init();
     }
 
     _Init() {
         this._renderer.setClearColor(0xA3A3A3, 0);
+
+        const renderer_area = new THREE.Vector2();
+        this._renderer.getSize(renderer_area);
+
         this._scene = new THREE.Scene();
         this._camera = new THREE.PerspectiveCamera(
             75,
-            this._renderer.getSize()[0] / this._renderer.getSize()[1],
+            renderer_area.width / renderer_area.height,
             0.1,
             1000
         )
@@ -23,12 +27,12 @@ export class PlayerPreviewScene {
 
         this._ambientLight = new THREE.AmbientLight(0xEDEDED, 0.8);
         this._scene.add(this._ambientLight);
-    
+
         this._directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
         this._directionalLight.position.set(10, 11, 7);
         this._scene.add(this._directionalLight);
 
-        this._controls = new OrbitControls( this._camera, this._renderer.domElement );
+        this._controls = new OrbitControls(this._camera, this._renderer.domElement);
 
         this._loader = new GLTFLoader();
         this._bearModel = null;
@@ -45,7 +49,6 @@ export class PlayerPreviewScene {
         );
 
         this._clock = new THREE.Clock();
-
     }
 
     UpdateCamera(aspect) {
@@ -66,7 +69,7 @@ export class PlayerPreviewScene {
             this._mixer.update(this._clock.getDelta());
         }
 
-        requestAnimationFrame(this.Animate)
+        requestAnimationFrame(this.Animate.bind(this))
         this._renderer.render(this._scene, this._camera)
     }
 }

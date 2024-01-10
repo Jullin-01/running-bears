@@ -1,13 +1,13 @@
-import {FiniteStateMachine, State} from './finiteStateMachine.js';
-import {Viewport} from './viewport.js';
-import {PlayerPreviewScene} from './playerPreviewScene.js';
+import { FiniteStateMachine, State } from './finiteStateMachine.js';
+import { Viewport } from './viewport.js';
+import { PlayerPreviewScene } from './playerPreviewScene.js';
 
 let playerName = 'Bear';
 let viewport = null;
 let playerPreviewScene = null;
 
 const color1Element = document.querySelector('.color1');
-const colorBear = window.getComputedStyle(color1Element).getPropertyValue('background-color');
+let colorBear = window.getComputedStyle(color1Element).getPropertyValue('background-color');
 
 function rendererResize() {
     const divCanvasBear = document.getElementById("divCanvasBear");
@@ -21,48 +21,44 @@ export class Launcher {
         this._Init();
     }
 
-
     _Init() {
         console.log('Launcher init');
         this._FSM = new LauncherFSM();
         this._FSM.SetState('loginWin');
 
         const buttonLogin = document.getElementById('button-start');
-        buttonLogin.addEventListener('click', (event) => {this._FSM.SetState('mainWin');});
+        buttonLogin.addEventListener('click', (event) => { this._FSM.SetState('mainWin'); });
 
         const buttonWardrobe = document.getElementById('choice-color');
-        buttonWardrobe.addEventListener('click', (event) => {this._FSM.SetState('wardrobeWin');});
+        buttonWardrobe.addEventListener('click', (event) => { this._FSM.SetState('wardrobeWin'); });
 
         const buttonHome = document.getElementById('main-menu');
-        buttonHome.addEventListener('click', (event) => {this._FSM.SetState('mainWin');});
+        buttonHome.addEventListener('click', (event) => { this._FSM.SetState('mainWin'); });
 
         const buttonPlay = document.getElementById('start-game');
-        buttonPlay.addEventListener('click', (event) => {this._FSM.SetState('gameWin');});
+        buttonPlay.addEventListener('click', (event) => { this._FSM.SetState('gameWin'); });
 
         // Color Blocks Listener
         const colorBlocks = document.querySelectorAll('.colorBlock');
-        colorBlocks.forEach(function(block) {
-            block.addEventListener('click', function() {
+        colorBlocks.forEach(function (block) {
+            block.addEventListener('click', function () {
                 toggleActiveClass(block);
                 changeDynamicBlockColor(block);
             });
         });
 
         function toggleActiveClass(clickedBlock) {
-            colorBlocks.forEach(function(block) {
+            colorBlocks.forEach(function (block) {
                 block.classList.remove('active');
             });
-    
+
             clickedBlock.classList.add('active');
         }
-    
+
         function changeDynamicBlockColor(clickedBlock) {
             let activeColor = getComputedStyle(clickedBlock).backgroundColor;
-            bearModel.traverse(function (object) {
-                if (object.material && object.material.name == 'Mat.base') {
-                    object.material.color.setStyle(activeColor);
-                }
-            })
+            colorBear = activeColor;
+            playerPreviewScene.UpdateBearColor(colorBear);
         }
 
         // Fullscreen init
@@ -90,12 +86,10 @@ export class Launcher {
 
         const canvas = document.getElementById("canvasColor");
         viewport = new Viewport(canvas);
-        console.log(viewport);
-        console.log(viewport.GetRenderer);
 
         playerPreviewScene = new PlayerPreviewScene(viewport.GetRenderer());
 
-        window.addEventListener('resize', (e) => { 
+        window.addEventListener('resize', (e) => {
             rendererResize();
         });
 
@@ -128,6 +122,7 @@ class LoginWinState extends State {
 
     Enter() {
         console.log('LoginWinState Enter()');
+        document.getElementById('divCanvasBear').style.display = 'none';
         document.getElementById('registration').style.display = 'block';
     }
 
@@ -152,6 +147,7 @@ class MainWinState extends State {
     Enter() {
         console.log('MainWinState Enter()')
         document.getElementById('mainMenuScreen').style.display = 'block';
+        document.getElementById('divCanvasBear').style.display = 'block';
         rendererResize();
         playerPreviewScene.UpdateBearColor(colorBear);
     }
@@ -174,6 +170,7 @@ class WardrobeWinState extends State {
     Enter() {
         console.log('WardrobeWinState Enter()')
         document.getElementById('choiceColorScreen').style.display = 'block';
+        document.getElementById('divCanvasBear').style.display = 'block';
         rendererResize();
         playerPreviewScene.UpdateBearColor(colorBear);
     }
@@ -196,6 +193,7 @@ class GameWinState extends State {
     Enter() {
         console.log('GameWinState Enter()')
         document.getElementById('gameplayScreen').style.display = 'block';
+        document.getElementById('divCanvasBear').style.display = 'block';
         rendererResize();
         // TODO запуск игры
     }

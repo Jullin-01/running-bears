@@ -3,8 +3,8 @@ import * as THREE from 'three';
 export class Viewport {
     constructor(canvas) {
         console.log('Viewport constructor');
-        this._Init();
         this._canvas = canvas;
+        this._Init();
     }
 
     _Init() {
@@ -14,7 +14,7 @@ export class Viewport {
     Resize(width, height) {
         this._canvas.width = width;
         this._canvas.height = height;
-        this._threejs.setSize(this._canvas.width, this._canvas.height); 
+        this._threejs.setSize(this._canvas.width, this._canvas.height);
         this._threejs.setPixelRatio = this._canvas.width / this._canvas.height;
     }
 

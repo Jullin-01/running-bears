@@ -41,9 +41,9 @@ class State {
         return this._name;
     }
 
-    Enter() {}
-    Exit() {}
-    Update() {}
+    Enter() { }
+    Exit() { }
+    Update() { }
 };
 
 export { FiniteStateMachine, State };
