@@ -2,19 +2,6 @@ import { FiniteStateMachine, State } from './finiteStateMachine.js';
 import { Viewport } from './viewport.js';
 import { PlayerPreviewScene } from './playerPreviewScene.js';
 
-let playerName = 'Bear';
-let viewport = null;
-let playerPreviewScene = null;
-
-const color1Element = document.querySelector('.color1');
-let colorBear = window.getComputedStyle(color1Element).getPropertyValue('background-color');
-
-function rendererResize() {
-    const divCanvasBear = document.getElementById("divCanvasBear");
-    viewport.Resize(divCanvasBear.clientWidth, divCanvasBear.clientHeight);
-    playerPreviewScene.UpdateCamera(divCanvasBear.clientWidth / divCanvasBear.clientHeight);
-}
-
 export class Launcher {
     constructor() {
         console.log('Launcher constructor');
@@ -23,7 +10,16 @@ export class Launcher {
 
     _Init() {
         console.log('Launcher init');
-        this._FSM = new LauncherFSM();
+
+        this._playerName = 'Bear';
+
+        this._viewport = null;
+        this._playerPreviewScene = null;
+
+        const color1Element = document.querySelector('.color1');
+        this._colorBear = window.getComputedStyle(color1Element).getPropertyValue('background-color');
+
+        this._FSM = new LauncherFSM(this);
         this._FSM.SetState('loginWin');
 
         const buttonLogin = document.getElementById('button-start');
@@ -40,10 +36,11 @@ export class Launcher {
 
         // Color Blocks Listener
         const colorBlocks = document.querySelectorAll('.colorBlock');
-        colorBlocks.forEach(function (block) {
-            block.addEventListener('click', function () {
+        colorBlocks.forEach((block) => {
+            block.addEventListener('click', () => {
                 toggleActiveClass(block);
-                changeDynamicBlockColor(block);
+                let _func = changeDynamicBlockColor.bind(this);
+                _func(block);
             });
         });
 
@@ -57,8 +54,8 @@ export class Launcher {
 
         function changeDynamicBlockColor(clickedBlock) {
             let activeColor = getComputedStyle(clickedBlock).backgroundColor;
-            colorBear = activeColor;
-            playerPreviewScene.UpdateBearColor(colorBear);
+            this._colorBear = activeColor;
+            this._playerPreviewScene.UpdateBearColor(this._colorBear);
         }
 
         // Fullscreen init
@@ -85,25 +82,32 @@ export class Launcher {
         });
 
         const canvas = document.getElementById("canvasColor");
-        viewport = new Viewport(canvas);
+        this._viewport = new Viewport(canvas);
 
-        playerPreviewScene = new PlayerPreviewScene(viewport.GetRenderer());
+        this._playerPreviewScene = new PlayerPreviewScene(this._viewport.GetRenderer());
 
         window.addEventListener('resize', (e) => {
-            rendererResize();
+            this.RendererResize();
         });
 
-        playerPreviewScene.Animate();
+        this._playerPreviewScene.Animate();
+    }
+
+    RendererResize() {
+        const divCanvasBear = document.getElementById("divCanvasBear");
+        this._viewport.Resize(divCanvasBear.clientWidth, divCanvasBear.clientHeight);
+        this._playerPreviewScene.UpdateCamera(divCanvasBear.clientWidth / divCanvasBear.clientHeight);
     }
 
     GetPlayerName() {
-        return playerName;
+        return this._playerName;
     }
 };
 
 class LauncherFSM extends FiniteStateMachine {
-    constructor() {
+    constructor(launcher) {
         super();
+        this._launcher = launcher;
         this._Init();
     }
 
@@ -128,9 +132,9 @@ class LoginWinState extends State {
 
     Exit() {
         console.log('LoginWinState Exit()')
-        playerName = document.getElementById("playerName").value;
+        this._parent._launcher._playerName = document.getElementById("playerName").value;
 
-        console.log(playerName);
+        console.log(this._parent._launcher._playerName);
         document.getElementById('registration').style.display = 'none';
     }
 
@@ -148,8 +152,8 @@ class MainWinState extends State {
         console.log('MainWinState Enter()')
         document.getElementById('mainMenuScreen').style.display = 'block';
         document.getElementById('divCanvasBear').style.display = 'block';
-        rendererResize();
-        playerPreviewScene.UpdateBearColor(colorBear);
+        this._parent._launcher.RendererResize();
+        this._parent._launcher._playerPreviewScene.UpdateBearColor(this._parent._launcher._colorBear);
     }
 
     Exit() {
@@ -171,8 +175,8 @@ class WardrobeWinState extends State {
         console.log('WardrobeWinState Enter()')
         document.getElementById('choiceColorScreen').style.display = 'block';
         document.getElementById('divCanvasBear').style.display = 'block';
-        rendererResize();
-        playerPreviewScene.UpdateBearColor(colorBear);
+        this._parent._launcher.RendererResize();
+        this._parent._launcher._playerPreviewScene.UpdateBearColor(this._parent._launcher._colorBear);
     }
 
     Exit() {
