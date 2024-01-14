@@ -22,17 +22,17 @@ export class Launcher {
         this._FSM = new LauncherFSM(this);
         this._FSM.SetState('loginWin');
 
-        const buttonLogin = document.getElementById('button-start');
-        buttonLogin.addEventListener('click', (event) => { this._FSM.SetState('mainWin'); });
-
-        const buttonWardrobe = document.getElementById('choice-color');
-        buttonWardrobe.addEventListener('click', (event) => { this._FSM.SetState('wardrobeWin'); });
-
-        const buttonHome = document.getElementById('main-menu');
-        buttonHome.addEventListener('click', (event) => { this._FSM.SetState('mainWin'); });
-
-        const buttonPlay = document.getElementById('start-game');
-        buttonPlay.addEventListener('click', (event) => { this._FSM.SetState('gameWin'); });
+        const handlerButtonEvent = (buttonId, targetState) => {
+            const button = document.getElementById(buttonId);
+            button.addEventListener('click', () => {
+                this._FSM.SetState(targetState);
+            });
+        };
+        
+        handlerButtonEvent('button-start', 'mainWin');
+        handlerButtonEvent('choice-color', 'wardrobeWin');
+        handlerButtonEvent('main-menu', 'mainWin');
+        handlerButtonEvent('start-game', 'gameWin');
 
         // Color Blocks Listener
         const colorBlocks = document.querySelectorAll('.colorBlock');
