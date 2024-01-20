@@ -25,6 +25,18 @@ export class PlayerPreviewScene {
         this._camera.position.z = 1;
         this._scene.add(this._camera);
 
+        this._podiumTopGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.06, 8);
+        this._podiumTopMaterial = new THREE.MeshBasicMaterial( {color: 0xdee0e3});
+        this._podiumTop = new THREE.Mesh(this._podiumTopGeometry, this._podiumTopMaterial);
+        this._podiumTop.position.set(0, -0.03, 0);
+        this._scene.add(this._podiumTop);
+
+        this._podiumBottomGeometry = new THREE.CylinderGeometry( 0.35, 0.35, 0.075, 8);
+        this._podiumBottomMaterial = new THREE.MeshBasicMaterial({ color: 0x122B66 });
+        this._podiumBottom = new THREE.Mesh(this._podiumBottomGeometry, this._podiumBottomMaterial);
+        this._podiumBottom.position.set(0, -0.095, 0);
+        this._scene.add(this._podiumBottom);
+
         this._ambientLight = new THREE.AmbientLight(0xEDEDED, 0.8);
         this._scene.add(this._ambientLight);
 
