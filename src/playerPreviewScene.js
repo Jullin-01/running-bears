@@ -22,7 +22,7 @@ export class PlayerPreviewScene {
             0.1,
             1000
         )
-        this._camera.position.z = 1;
+        this._camera.position.set(-0.2, 0.5, 0.8);
         this._scene.add(this._camera);
 
         this._podiumTopGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.06, 8);
@@ -45,6 +45,7 @@ export class PlayerPreviewScene {
         this._scene.add(this._directionalLight);
 
         this._controls = new OrbitControls(this._camera, this._renderer.domElement);
+        this._controls.enabled = false;
 
         this._loader = new GLTFLoader();
         this._bearModel = null;
