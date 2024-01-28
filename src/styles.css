@@ -172,11 +172,13 @@ container {
 
 #mainMenuScreen > button.mainMenu, 
 #choiceColorScreen > button.mainMenu {
+    top: 2%;
     left: 25%;
 }
 
 #mainMenuScreen > button.choiceColor,
 #choiceColorScreen > button.choiceColor {
+    top: 2%;
     right: 25%;
 }
 
