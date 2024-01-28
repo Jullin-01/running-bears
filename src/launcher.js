@@ -1,6 +1,7 @@
 import { FiniteStateMachine, State } from './finiteStateMachine.js';
 import { Viewport } from './viewport.js';
 import { PlayerPreviewScene } from './playerPreviewScene.js';
+import { GameScene } from './gameScene.js';
 
 export class Launcher {
     constructor() {
@@ -15,6 +16,7 @@ export class Launcher {
 
         this._viewport = null;
         this._playerPreviewScene = null;
+        this._gameScene = null;
 
         const color1Element = document.querySelector('.color1');
         this._colorBear = window.getComputedStyle(color1Element).getPropertyValue('background-color');
@@ -85,18 +87,18 @@ export class Launcher {
         this._viewport = new Viewport(canvas);
 
         this._playerPreviewScene = new PlayerPreviewScene(this._viewport.GetRenderer());
+        this._gameScene = new GameScene(this._viewport.GetRenderer());
 
         window.addEventListener('resize', (e) => {
             this.RendererResize();
         });
-
-        this._playerPreviewScene.Animate();
     }
 
     RendererResize() {
         const divCanvasBear = document.getElementById("divCanvasBear");
         this._viewport.Resize(divCanvasBear.clientWidth, divCanvasBear.clientHeight);
         this._playerPreviewScene.UpdateCamera(divCanvasBear.clientWidth / divCanvasBear.clientHeight);
+        this._gameScene.UpdateCamera(divCanvasBear.clientWidth / divCanvasBear.clientHeight);
     }
 
     GetPlayerName() {
@@ -154,11 +156,13 @@ class MainWinState extends State {
         document.getElementById('divCanvasBear').style.display = 'block';
         this._parent._launcher.RendererResize();
         this._parent._launcher._playerPreviewScene.UpdateBearColor(this._parent._launcher._colorBear);
+        this._parent._launcher._playerPreviewScene.StartRendering();
     }
 
     Exit() {
         console.log('MainWinState Exit()')
         document.getElementById('mainMenuScreen').style.display = 'none';
+        this._parent._launcher._playerPreviewScene.StopRendering();
     }
 
     Update() {
@@ -177,11 +181,13 @@ class WardrobeWinState extends State {
         document.getElementById('divCanvasBear').style.display = 'block';
         this._parent._launcher.RendererResize();
         this._parent._launcher._playerPreviewScene.UpdateBearColor(this._parent._launcher._colorBear);
+        this._parent._launcher._playerPreviewScene.StartRendering();
     }
 
     Exit() {
         console.log('WardrobeWinState Exit()')
         document.getElementById('choiceColorScreen').style.display = 'none';
+        this._parent._launcher._playerPreviewScene.StopRendering();
     }
 
     Update() {
@@ -198,13 +204,19 @@ class GameWinState extends State {
         console.log('GameWinState Enter()')
         document.getElementById('gameplayScreen').style.display = 'block';
         document.getElementById('divCanvasBear').style.display = 'block';
-        rendererResize();
+        document.getElementById('divCanvasBear').classList.toggle('BearPreviewAreaGame');
+
+        this._parent._launcher.RendererResize();
+        this._parent._launcher._gameScene.UpdateBearColor(this._parent._launcher._colorBear);
+        this._parent._launcher._gameScene.StartRendering();
         // TODO запуск игры
     }
 
     Exit() {
         console.log('GameWinState Exit()')
         document.getElementById('gameplayScreen').style.display = 'none';
+        this._parent._launcher._gameScene.StopRendering();
+        document.getElementById('divCanvasBear').classList.toggle('BearPreviewAreaGame');
     }
 
     Update() {
