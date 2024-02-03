@@ -20,8 +20,31 @@ export class GameScene {
             0.1,
             1000
         )
-        this._camera.position.set(-0.73, 0.22, 0.74);
+        this._camera.position.set(-1, 0.22, 0.74);
         this._scene.add(this._camera);
+
+        this._skyboxMaterialArray = [];
+        this._skyboxTextureFront = new THREE.TextureLoader().load('/static/skybox/front.png');
+        this._skyboxTextureBack = new THREE.TextureLoader().load('/static/skybox/back.png');
+        this._skyboxTextureUp = new THREE.TextureLoader().load('/static/skybox/up.png');
+        this._skyboxTextureDown = new THREE.TextureLoader().load('/static/skybox/down.png');
+        this._skyboxTextureLeft = new THREE.TextureLoader().load('/static/skybox/left.png');
+        this._skyboxTextureRight = new THREE.TextureLoader().load('/static/skybox/right.png');
+
+        this._skyboxMaterialArray.push(new THREE.MeshBasicMaterial({map: this._skyboxTextureFront}));
+        this._skyboxMaterialArray.push(new THREE.MeshBasicMaterial({map: this._skyboxTextureBack}));
+        this._skyboxMaterialArray.push(new THREE.MeshBasicMaterial({map: this._skyboxTextureUp}));
+        this._skyboxMaterialArray.push(new THREE.MeshBasicMaterial({map: this._skyboxTextureDown}));
+        this._skyboxMaterialArray.push(new THREE.MeshBasicMaterial({map: this._skyboxTextureLeft}));
+        this._skyboxMaterialArray.push(new THREE.MeshBasicMaterial({map: this._skyboxTextureRight}));
+
+        for(let i=0; i<6; i++)
+            this._skyboxMaterialArray[i].side = THREE.BackSide;
+
+        this._skyboxGeometry = new THREE.BoxGeometry(50, 50, 50);
+        this._skybox = new THREE.Mesh( this._skyboxGeometry, this._skyboxMaterialArray);
+        this._scene.add(this._skybox);
+
 
         this._ambientLight = new THREE.AmbientLight(0xEDEDED, 0.8);
         this._scene.add(this._ambientLight);
@@ -67,7 +90,7 @@ export class GameScene {
     }
 
     StartRendering() {
-        this._renderer.setClearColor(0xA3A3A3, 1);
+//        this._renderer.setClearColor(0xA3A3A3, 1);
         this._is_rendering_enabled = true;
         this._Animate();
     }
