@@ -24,12 +24,12 @@ export class GameScene {
         this._scene.add(this._camera);
 
         this._skyboxMaterialArray = [];
-        this._skyboxTextureFront = new THREE.TextureLoader().load('/static/skybox/front.png');
-        this._skyboxTextureBack = new THREE.TextureLoader().load('/static/skybox/back.png');
-        this._skyboxTextureUp = new THREE.TextureLoader().load('/static/skybox/up.png');
-        this._skyboxTextureDown = new THREE.TextureLoader().load('/static/skybox/down.png');
-        this._skyboxTextureLeft = new THREE.TextureLoader().load('/static/skybox/left.png');
-        this._skyboxTextureRight = new THREE.TextureLoader().load('/static/skybox/right.png');
+        this._skyboxTextureFront = new THREE.TextureLoader().load('./static/skybox/front.png');
+        this._skyboxTextureBack = new THREE.TextureLoader().load('./static/skybox/back.png');
+        this._skyboxTextureUp = new THREE.TextureLoader().load('./static/skybox/up.png');
+        this._skyboxTextureDown = new THREE.TextureLoader().load('./static/skybox/down.png');
+        this._skyboxTextureLeft = new THREE.TextureLoader().load('./static/skybox/left.png');
+        this._skyboxTextureRight = new THREE.TextureLoader().load('./static/skybox/right.png');
 
         this._skyboxMaterialArray.push(new THREE.MeshBasicMaterial({map: this._skyboxTextureFront}));
         this._skyboxMaterialArray.push(new THREE.MeshBasicMaterial({map: this._skyboxTextureBack}));
