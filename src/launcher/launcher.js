@@ -13,33 +13,72 @@ export class Launcher {
     _Init() {
         console.log('Launcher init');
 
+        this._playerName = 'Bear';
+        this._colorBear = null;
         this._prevUpdateTimestamp = 0;
 
-        this._playerName = 'Bear';
-
-        this._viewport = null;
-        this._playerPreviewScene = null;
-        this._gameScene = null;
-
-        const color1Element = document.querySelector('.color1');
-        this._colorBear = window.getComputedStyle(color1Element).getPropertyValue('background-color');
+        this._NavButtonsInit();
+        this._FullscreenButtonInit();
+        this._ColorBlocksButtonsInit();
 
         this._FSM = new LauncherFSM(this);
         this._FSM.SetState('loginWin');
 
+        const canvas = document.getElementById("canvasColor");
+        this._viewport = new Viewport(canvas);
+        this._playerPreviewScene = new PlayerPreviewScene(this._viewport.GetRenderer());
+        this._gameScene = new GameScene(this._viewport.GetRenderer());
+
+        window.addEventListener('resize', (e) => {
+            this.RendererResize();
+        });
+
+        this._Update(this._prevUpdateTimestamp);
+    }
+
+    _NavButtonsInit() {
         const handlerButtonEvent = (buttonId, targetState) => {
             const button = document.getElementById(buttonId);
             button.addEventListener('click', () => {
                 this._FSM.SetState(targetState);
             });
         };
-        
+
         handlerButtonEvent('button-start', 'mainWin');
         handlerButtonEvent('choice-color', 'wardrobeWin');
         handlerButtonEvent('main-menu', 'mainWin');
         handlerButtonEvent('start-game', 'gameWin');
+    }
 
-        // Color Blocks Listener
+    _FullscreenButtonInit() {
+        const buttonFullscreen = document.getElementById('fullscreen-button');
+        const gameContainer = document.getElementById('game-container');
+        const gameTitle = document.querySelector('h1'); // TODO: remove this
+
+        buttonFullscreen.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                gameContainer.requestFullscreen()
+                    .catch(err => {
+                        alert(`Error when switching to full screen mode: ${err.message}`);
+                    });
+                gameTitle.classList.add('large');
+            } else {
+                document.exitFullscreen();
+                gameTitle.classList.remove('large');
+            }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                gameTitle.classList.remove('large');
+            }
+        });
+    }
+
+    _ColorBlocksButtonsInit() {
+        const color1Element = document.querySelector('.color1');
+        this._colorBear = window.getComputedStyle(color1Element).getPropertyValue('background-color');
+
         const colorBlocks = document.querySelectorAll('.colorBlock');
         colorBlocks.forEach((block) => {
             block.addEventListener('click', () => {
@@ -60,43 +99,8 @@ export class Launcher {
         function changeDynamicBlockColor(clickedBlock) {
             let activeColor = getComputedStyle(clickedBlock).backgroundColor;
             this._colorBear = activeColor;
-            this._playerPreviewScene.UpdateBearColor(this._colorBear);
+            this._playerPreviewScene?.UpdateBearColor(this._colorBear);
         }
-
-        // Fullscreen init
-        const buttonFullscreen = document.getElementById('fullscreen-button');
-        const gameContainer = document.getElementById('game-container');
-        const gameTitle = document.querySelector('h1');
-        buttonFullscreen.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                gameContainer.requestFullscreen()
-                    .catch(err => {
-                        alert(`Error when switching to full screen mode: ${err.message}`);
-                    });
-                gameTitle.classList.add('large');
-            } else {
-                document.exitFullscreen();
-                gameTitle.classList.remove('large');
-            }
-        });
-
-        document.addEventListener('fullscreenchange', () => {
-            if (!document.fullscreenElement) {
-                gameTitle.classList.remove('large');
-            }
-        });
-
-        const canvas = document.getElementById("canvasColor");
-        this._viewport = new Viewport(canvas);
-
-        this._playerPreviewScene = new PlayerPreviewScene(this._viewport.GetRenderer());
-        this._gameScene = new GameScene(this._viewport.GetRenderer());
-
-        window.addEventListener('resize', (e) => {
-            this.RendererResize();
-        });
-
-        this._Update(this._prevUpdateTimestamp);
     }
 
     _Update(timestamp) {
@@ -132,10 +136,35 @@ class LauncherFSM extends FiniteStateMachine {
     }
 
     _Init() {
+        this.mapWinNameToDivName = new Map([
+            ['loginWin', 'registration'],
+            ['mainWin', 'mainMenuScreen'],
+            ['wardrobeWin', 'choiceColorScreen'],
+            ['gameWin', 'gameplayScreen']
+        ]);
+
         this._AddState('loginWin', LoginWinState);
         this._AddState('mainWin', MainWinState);
         this._AddState('wardrobeWin', WardrobeWinState);
         this._AddState('gameWin', GameWinState);
+    }
+
+    ShowWin(winName) {
+        const divName = this.mapWinNameToDivName.get(winName);
+        this.ShowDiv(divName);
+    }
+
+    HideWin(winName) {
+        const divName = this.mapWinNameToDivName.get(winName);
+        this.HideDiv(divName);
+    }
+
+    ShowDiv(divName) {
+        document.getElementById(divName).style.display = 'block';
+    }
+
+    HideDiv(divName) {
+        document.getElementById(divName).style.display = 'none';
     }
 };
 
@@ -146,22 +175,24 @@ class LoginWinState extends State {
 
     Enter() {
         console.log('LoginWinState Enter()');
-        document.getElementById('divCanvasBear').style.display = 'none';
-        document.getElementById('registration').style.display = 'block';
+        this._parent.HideDiv('divCanvasBear');
+        this._parent.ShowWin(this._name);
     }
 
     Exit() {
         console.log('LoginWinState Exit()')
-        this._parent._launcher._playerName = document.getElementById("playerName").value;
 
+        this._parent._launcher._playerName = document.getElementById("playerName").value;
         console.log(this._parent._launcher._playerName);
-        document.getElementById('registration').style.display = 'none';
+
+        this._parent.HideWin(this._name);
     }
 
     Update() {
         console.log('LoginWinState Update()')
     }
 };
+
 
 class MainWinState extends State {
     constructor(parent) {
@@ -170,8 +201,9 @@ class MainWinState extends State {
 
     Enter() {
         console.log('MainWinState Enter()')
-        document.getElementById('mainMenuScreen').style.display = 'block';
-        document.getElementById('divCanvasBear').style.display = 'block';
+        this._parent.ShowDiv('divCanvasBear');
+        this._parent.ShowWin(this._name);
+
         this._parent._launcher.RendererResize();
         this._parent._launcher._playerPreviewScene.UpdateBearColor(this._parent._launcher._colorBear);
         this._parent._launcher._playerPreviewScene.StartRendering();
@@ -179,7 +211,8 @@ class MainWinState extends State {
 
     Exit() {
         console.log('MainWinState Exit()')
-        document.getElementById('mainMenuScreen').style.display = 'none';
+        this._parent.HideWin(this._name);
+
         this._parent._launcher._playerPreviewScene.StopRendering();
     }
 
@@ -196,8 +229,9 @@ class WardrobeWinState extends State {
 
     Enter() {
         console.log('WardrobeWinState Enter()')
-        document.getElementById('choiceColorScreen').style.display = 'block';
-        document.getElementById('divCanvasBear').style.display = 'block';
+        this._parent.ShowDiv('divCanvasBear');
+        this._parent.ShowWin(this._name);
+
         this._parent._launcher.RendererResize();
         this._parent._launcher._playerPreviewScene.UpdateBearColor(this._parent._launcher._colorBear);
         this._parent._launcher._playerPreviewScene.StartRendering();
@@ -205,12 +239,14 @@ class WardrobeWinState extends State {
 
     Exit() {
         console.log('WardrobeWinState Exit()')
-        document.getElementById('choiceColorScreen').style.display = 'none';
+        this._parent.HideWin(this._name);
+
         this._parent._launcher._playerPreviewScene.StopRendering();
     }
 
     Update() {
         console.log('WardrobeWinState Update()')
+        this._parent._launcher._playerPreviewScene.Animate();
     }
 };
 
@@ -221,8 +257,9 @@ class GameWinState extends State {
 
     Enter() {
         console.log('GameWinState Enter()')
-        document.getElementById('gameplayScreen').style.display = 'block';
-        document.getElementById('divCanvasBear').style.display = 'block';
+        this._parent.ShowDiv('divCanvasBear');
+        this._parent.ShowWin(this._name);
+
         document.getElementById('divCanvasBear').classList.toggle('BearPreviewAreaGame');
 
         this._parent._launcher.RendererResize();
@@ -234,18 +271,21 @@ class GameWinState extends State {
 
     Exit() {
         console.log('GameWinState Exit()')
-        document.getElementById('gameplayScreen').style.display = 'none';
+        this._parent.HideWin(this._name);
+
         this._parent._launcher._gameScene.StopRendering();
+
         document.getElementById('divCanvasBear').classList.toggle('BearPreviewAreaGame');
     }
 
-    Update() {
+
+    Update(timeElapsedSec) {
         console.log('GameWinState Update()')
 
         this._parent._launcher._gameScene.Animate();
 
         // TODO обновление состояния игры
-        this._game.Update(null, null);
+        this._game.Update(timeElapsedSec);
     }
 };
 

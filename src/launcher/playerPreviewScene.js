@@ -79,14 +79,14 @@ export class PlayerPreviewScene {
     StartRendering() {
         this._renderer.setClearColor(0xA3A3A3, 0);
         this._is_rendering_enabled = true;
-        this._Animate();
+        this.Animate();
     }
 
     StopRendering() {
         this._is_rendering_enabled = false;
     }
 
-    _Animate() {
+    Animate() {
         if (this._is_rendering_enabled) {
             if (this._mixer) {
                 this._mixer.update(this._clock.getDelta());
