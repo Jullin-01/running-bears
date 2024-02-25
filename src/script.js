@@ -1,4 +1,4 @@
-import {Launcher} from './launcher.js'
+import {Launcher} from '../src/launcher/launcher.js'
 import './styles.css';
 
 let _APP = null;

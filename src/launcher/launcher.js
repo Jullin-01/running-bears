@@ -1,8 +1,8 @@
-import { FiniteStateMachine, State } from './finiteStateMachine.js';
-import { Viewport } from './viewport.js';
+import { FiniteStateMachine, State } from '../common/finiteStateMachine.js';
+import { Viewport } from '../common/viewport.js';
 import { PlayerPreviewScene } from './playerPreviewScene.js';
-import { GameScene } from './gameScene.js';
-import { Game } from './game.js';
+import { GameScene } from '../game/gameScene.js';
+import { Game } from '../game/game.js';
 
 export class Launcher {
     constructor() {

@@ -1,4 +1,4 @@
-import { FiniteStateMachine, State } from './finiteStateMachine.js';
+import { FiniteStateMachine, State } from '../common/finiteStateMachine.js';
 
 export class Game {
     constructor() {
