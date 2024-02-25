@@ -2,6 +2,7 @@ import { FiniteStateMachine, State } from './finiteStateMachine.js';
 import { Viewport } from './viewport.js';
 import { PlayerPreviewScene } from './playerPreviewScene.js';
 import { GameScene } from './gameScene.js';
+import { Game } from './game.js';
 
 export class Launcher {
     constructor() {
@@ -11,6 +12,8 @@ export class Launcher {
 
     _Init() {
         console.log('Launcher init');
+
+        this._prevUpdateTimestamp = 0;
 
         this._playerName = 'Bear';
 
@@ -92,6 +95,21 @@ export class Launcher {
         window.addEventListener('resize', (e) => {
             this.RendererResize();
         });
+
+        this._Update(this._prevUpdateTimestamp);
+    }
+
+    _Update(timestamp) {
+        const timeElapsed = timestamp - this._prevUpdateTimestamp;
+        const timeElapsedSec = Math.min(1.0 / 30.0, timeElapsed * 0.001);
+
+        //console.log(timeElapsedSec);
+
+        this._FSM.Update(timeElapsedSec);
+
+        requestAnimationFrame(this._Update.bind(this));
+
+        this._prevUpdateTimestamp = timestamp;
     }
 
     RendererResize() {
@@ -167,6 +185,7 @@ class MainWinState extends State {
 
     Update() {
         console.log('MainWinState Update()')
+        this._parent._launcher._playerPreviewScene.Animate();
     }
 };
 
@@ -210,6 +229,7 @@ class GameWinState extends State {
         this._parent._launcher._gameScene.UpdateBearColor(this._parent._launcher._colorBear);
         this._parent._launcher._gameScene.StartRendering();
         // TODO запуск игры
+        this._game = new Game();
     }
 
     Exit() {
@@ -221,7 +241,11 @@ class GameWinState extends State {
 
     Update() {
         console.log('GameWinState Update()')
+
+        this._parent._launcher._gameScene.Animate();
+
         // TODO обновление состояния игры
+        this._game.Update(null, null);
     }
 };
 

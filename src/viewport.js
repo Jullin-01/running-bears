@@ -8,7 +8,7 @@ export class Viewport {
     }
 
     _Init() {
-        this._threejs = new THREE.WebGLRenderer({ canvas: this._canvas });
+        this._threejs = new THREE.WebGLRenderer({ canvas: this._canvas, antialias: true });
     }
 
     Resize(width, height) {

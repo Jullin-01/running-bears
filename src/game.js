@@ -9,54 +9,14 @@ export class Game {
     _Init() {
         console.log('Game init');
 
-        this._playerName = 'Bear';
-
         this._FSM = new GameFSM(this);
         this._FSM.SetState('loading');
-
-        // Fullscreen init
-        const buttonFullscreen = document.getElementById('fullscreen-button');
-        const gameContainer = document.getElementById('game-container');
-        const gameTitle = document.querySelector('h1');
-        buttonFullscreen.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                gameContainer.requestFullscreen()
-                    .catch(err => {
-                        alert(`Error when switching to full screen mode: ${err.message}`);
-                    });
-                gameTitle.classList.add('large');
-            } else {
-                document.exitFullscreen();
-                gameTitle.classList.remove('large');
-            }
-        });
-
-        document.addEventListener('fullscreenchange', () => {
-            if (!document.fullscreenElement) {
-                gameTitle.classList.remove('large');
-            }
-        });
-
-        const canvas = document.getElementById("canvasColor");
-        this._gameScene = new GameScene(canvas.GetRenderer());
-
-        window.addEventListener('resize', (e) => {
-            this.RendererResize();
-        });
-    }
-
-    RendererResize() {
-        const divCanvasBear = document.getElementById("divCanvasBear");
-        this._viewport.Resize(divCanvasBear.clientWidth, divCanvasBear.clientHeight);
-        this._playerPreviewScene.UpdateCamera(divCanvasBear.clientWidth / divCanvasBear.clientHeight);
-        this._gameScene.UpdateCamera(divCanvasBear.clientWidth / divCanvasBear.clientHeight);
-    }
-
-    GetPlayerName() {
-        return this._playerName;
+    }   
+    Update(timeElapsedSec, input) {
+            this._FSM.Update(timeElapsedSec, input);
     }
 };
-
+    
 class GameFSM extends FiniteStateMachine {
     constructor(game) {
         super();

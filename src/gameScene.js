@@ -105,7 +105,6 @@ export class GameScene {
                 this._mixer.update(this._clock.getDelta());
             }
 
-            requestAnimationFrame(this._Animate.bind(this))
             this._renderer.render(this._scene, this._camera)
         }
     }
