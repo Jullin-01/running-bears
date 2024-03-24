@@ -1,0 +1,131 @@
+{
+    "level": {
+        "platforms": [
+            {
+                "x":-10,
+                "y":0,
+                "z":0,
+                "length": 14,
+                "width": 19,
+                "height": 1,
+                "color": "#015AAA" 
+            },
+            {
+                "x":3,
+                "y":0,
+                "z":0.5,
+                "length": 8,
+                "width": 7,
+                "height": 1,
+                "color": "#015AAA" 
+            },
+            {
+                "x":10,
+                "y":0,
+                "z":-0.5,
+                "length": 1,
+                "width": 5,
+                "height": 1,
+                "color": "#015AAA" 
+            },
+            {
+                "x":14,
+                "y":0,
+                "z":0,
+                "length": 6,
+                "width": 3,
+                "height": 1,
+                "color": "#015AAA" 
+            }
+        ],
+
+        "start_zone": {
+            "x":-4.5,
+            "y":0,
+            "z":0.5,
+            "length": 5,
+            "width": 19,
+            "height": 0,
+            "color": "#0000FF" 
+        },
+
+        "finish_zone": {
+            "x":25.5,
+            "y":0,
+            "z":0.5,
+            "length": 1,
+            "width": 3,
+            "height": 4,
+            "color": "#0000FF" 
+        },
+
+        "starting_points": [
+            {
+                "x":-4.5,
+                "y":0,
+                "z":0.5,
+                "length": 1,
+                "width": 1,
+                "height": 0,
+                "color": "#0000FF" 
+            },
+            {
+                "x":-4.5,
+                "y":3,
+                "z":0.5,
+                "length": 1,
+                "width": 1,
+                "height": 0,
+                "color": "#0000FF" 
+            },
+            {
+                "x":-4.5,
+                "y":6,
+                "z":0.5,
+                "length": 1,
+                "width": 1,
+                "height": 0,
+                "color": "#0000FF" 
+            },
+            {
+                "x":-4.5,
+                "y":-3,
+                "z":0.5,
+                "length": 1,
+                "width": 1,
+                "height": 0,
+                "color": "#0000FF" 
+            },
+            {
+                "x":-4.5,
+                "y":-6,
+                "z":0.5,
+                "length": 1,
+                "width": 1,
+                "height": 0,            
+                "color": "#0000FF" 
+            }
+        ],
+
+        "respawn_zone": [
+            {
+                "x":9.5,
+                "y":0,
+                "z":0.5,
+                "length": 1,
+                "width": 7,
+                "height": 4,
+                "color": "#afeee"
+            },
+            {
+                "x":20.5,
+                "y":0,
+                "z":0.5,
+                "length": 1,
+                "width": 3,
+                "height": 4,
+                "color": "#afeee"
+            }
+        ]
+    }
+}

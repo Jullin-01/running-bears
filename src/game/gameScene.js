@@ -74,6 +74,26 @@ export class GameScene {
         );
 
         this._clock = new THREE.Clock();
+
+        this._LoadLevel();
+    }
+
+    async _LoadLevel() {
+        const response = await fetch('./static/game_description.json');
+        const jsonData = await response.json();
+        //console.log(jsonData);
+        //console.log(jsonData['level'].platforms);
+
+        jsonData['level'].platforms.forEach((platform) => {
+            console.log(platform);
+
+            const platformGeometry = new THREE.BoxGeometry(platform.width, platform.height, platform.length);
+            const platformMaterial = new THREE.MeshBasicMaterial({ color: platform.color, transparent: true, opacity: 0.5 });
+            const platformMesh = new THREE.Mesh(platformGeometry, platformMaterial);
+            platformMesh.position.set(platform.x, platform.z, platform.y);
+            this._scene.add(platformMesh);
+        });
+
     }
 
     UpdateCamera(aspect) {
