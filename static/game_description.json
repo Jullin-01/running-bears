@@ -40,11 +40,11 @@
         ],
 
         "start_zone": {
-            "x":-4.5,
+            "x":-18,
             "y":0,
             "z":0.5,
-            "length": 5,
-            "width": 19,
+            "length": 14,
+            "width": 3,
             "height": 0,
             "color": "#0000FF" 
         },
