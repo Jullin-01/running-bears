@@ -95,7 +95,6 @@ export class GameScene {
         });
 
         const startZone = jsonData['level'].start_zone;
-
         const createStartZone = () => {
             const startZoneGeometry = new THREE.BoxGeometry(startZone.width, startZone.height, startZone.length);
             const startZoneMaterial = new THREE.MeshBasicMaterial({ color: startZone.color, transparent: true, opacity: 0.5 });
@@ -104,6 +103,16 @@ export class GameScene {
             this._scene.add(startZoneMesh);
         };
         createStartZone();
+
+        const finishZone = jsonData['level'].finish_zone;
+        const createFinishZone = () => {
+            const finishZoneGeometry = new THREE.BoxGeometry(finishZone.width, finishZone.height, finishZone.length);
+            const finishZoneMaterial = new THREE.MeshBasicMaterial({ color: finishZone.color, transparent: true, opacity: 0.5 });
+            const finishZoneMesh = new THREE.Mesh(finishZoneGeometry, finishZoneMaterial);
+            finishZoneMesh.position.set(finishZone.x, finishZone.z, finishZone.y);
+            this._scene.add(finishZoneMesh);
+        };
+        createFinishZone();
     }
 
     UpdateCamera(aspect) {
