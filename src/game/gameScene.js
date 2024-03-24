@@ -94,6 +94,16 @@ export class GameScene {
             this._scene.add(platformMesh);
         });
 
+        const startZone = jsonData['level'].start_zone;
+
+        const createStartZone = () => {
+            const startZoneGeometry = new THREE.BoxGeometry(startZone.width, startZone.height, startZone.length);
+            const startZoneMaterial = new THREE.MeshBasicMaterial({ color: startZone.color, transparent: true, opacity: 0.5 });
+            const startZoneMesh = new THREE.Mesh(startZoneGeometry, startZoneMaterial);
+            startZoneMesh.position.set(startZone.x, startZone.z, startZone.y);
+            this._scene.add(startZoneMesh);
+        };
+        createStartZone();
     }
 
     UpdateCamera(aspect) {
